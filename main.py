@@ -29,7 +29,19 @@ def timer_decorator(func):
 # TUGAS 2, 3, & 4: Fungsi Utama dengan Type Annotations
 # Buat fungsi analyze_logs yang menerima argumen string dan mereturn list.
 # Jangan lupa pakaikan jaket @timer_decorator di atasnya.
+def analyze_logs(data):
+    response = json.loads(raw_api_response)
+    node_1 = response['data']['node_1_logins']
+    node_2 = response['data']['node_2_logins']
+    banned_users = response['data']['banned_users']
+    dataset_1 = set(int(angka) for angka in node_1.strip().split(', '))
+    dataset_2 = set(int(angka) for angka in node_2.strip().split(', '))
+    new_data = dataset_1.intersection(dataset_2)
+    new_data_check = new_data.difference(banned_users)
+    complete_data = list(new_data_check)
+    return complete_data
 
+analyze_logs(raw_api_response)
 
 
 # --- EKSEKUSI ---
