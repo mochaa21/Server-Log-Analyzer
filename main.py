@@ -19,14 +19,14 @@ def timer_decorator(func: callable) -> callable:
     def myinner(*args, **kwargs):
         print("Processing Data...")
         time.sleep(2.5)
+        hasil = func(*args, **kwargs)
         print("Process Complete!")
-        print(func(*args, **kwargs))
-        return
+        return hasil
     return myinner
 
 @timer_decorator
-def analyze_logs(data: str) -> list:
-    response: str = json.loads(raw_api_response)
+def analyze_logs(data: str) -> str:
+    response: dict = json.loads(raw_api_response)
     node_1: str = response['data']['node_1_logins']
     node_2: str = response['data']['node_2_logins']
     banned_users: list = response['data']['banned_users']
@@ -38,7 +38,7 @@ def analyze_logs(data: str) -> list:
     complete_data: list = sorted(new_data_check)
     return f"Valid players active on both nodes: {complete_data}"
 
-analyze_logs(raw_api_response)
+print(analyze_logs(raw_api_response))
 
 
 # --- EKSEKUSI ---
